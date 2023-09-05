@@ -5,7 +5,7 @@
 
 ## Open Sources related to SlamPiBot
 - [SlamPiBot-Foxy-V6](https://github.com/edurobotailab/slampibot-foxy-v6.git)
-- [SlamPiBot-Humble-V6](https://github.com/edurobotailab/slampibot-humble-v7.git)
+- [SlamPiBot-Humble-V7](https://github.com/edurobotailab/slampibot-humble-v7.git)
 - [SlamPiBot-Pico](https://github.com/edurobotailab/slampibot-pico-v6.git)
 - [ydlidar-sdk](https://github.com/YDLIDAR/YDLidar-SDK.git)
 - [ydlidar-ros2](https://github.com/YDLIDAR/ydlidar_ros2.git)
