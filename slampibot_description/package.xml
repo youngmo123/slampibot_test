@@ -2,11 +2,12 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>slampibot_description</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="apb@todo.todo">apb</maintainer>
-  <license>TODO: License declaration</license>
-
+  <version>7.0.0</version>
+  <description>ROS2 Humble Packages for Slampibot</description>
+  <maintainer email="edurobotailab@gmail.com">erail</maintainer>
+  <license>Apache 2.0</license>
+  <author email="leohycho@gamil.com">Leo Cho</author>
+  
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>urdf</depend>
@@ -19,3 +20,4 @@
     <build_type>ament_cmake</build_type>
   </export>
 </package>
+
