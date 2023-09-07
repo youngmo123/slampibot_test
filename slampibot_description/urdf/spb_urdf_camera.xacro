@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <joint name="camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="camera_link"/>
+        <origin xyz="${base_length/4} 0 ${base_height/2+0.03/2+0.05}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="camera_link">
+        <visual>
+            <geometry>
+                <box size="0.010 0.03 0.03"/>
+            </geometry>
+            <material name="Red"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 ${-0.05/2-0.03/2}"/>
+            <geometry>
+                <cylinder radius="0.002" length="0.05"/>
+            </geometry>
+            <material name="Red"/>
+        </visual>
+    </link>
+
+
+    <joint name="camera_optical_joint" type="fixed">
+        <parent link="camera_link"/>
+        <child link="camera_optical_link"/>        
+        <origin xyz="0 0 0" rpy="0 0 0"/>        
+    </joint>
+
+    <link name="camera_optical_link"></link>
+
+</robot>

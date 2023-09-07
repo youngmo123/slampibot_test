@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot name="spb_urdf" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    
+    <xacro:include filename="spb_urdf_core.xacro" />
+
+    <xacro:include filename="spb_urdf_lidar.xacro" />
+    <xacro:include filename="spb_urdf_camera.xacro" />
+    <xacro:include filename="spb_urdf_imu.xacro" />
+    
+</robot>
+
+<!-- xacro spb_urdf.xacro > spb_urdf.urdf -->
