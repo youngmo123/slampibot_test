@@ -45,7 +45,7 @@ def generate_launch_description():
         output='screen'
     )
        
-    ydlidar_cmd = LifecycleNode(
+    ydlidar_cmd = Node(
         package='ydlidar',
         executable='ydlidar_node',
         name='ydlidar_node',
