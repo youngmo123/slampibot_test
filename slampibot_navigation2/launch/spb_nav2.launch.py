@@ -39,7 +39,8 @@ def generate_launch_description():
     
     # make your own map and replace the turtlebot3_world.yaml with your own map files
     # params_nav2_map = PathJoinSubstitution([pkg_share_navigation2, 'maps', 'turtlebot3_world.yaml'])    
-    params_nav2_map = PathJoinSubstitution([pkg_share_navigation2, 'maps', 'map_office_230802.yaml'])        
+    # params_nav2_map = PathJoinSubstitution([pkg_share_navigation2, 'maps', 'map_office_230802.yaml'])       
+    params_nav2_map = PathJoinSubstitution([pkg_share_navigation2, 'maps', 'map_office_230920.yaml'])        
     params_nav2 = PathJoinSubstitution([pkg_share_navigation2, 'params', 'slampibot_nav2_params.yaml'])    
     launch_nav2_bringup = PathJoinSubstitution([pkg_share_nav2_bringup, 'launch', 'bringup_launch.py'])
     
