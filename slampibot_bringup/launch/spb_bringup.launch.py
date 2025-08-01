@@ -1,4 +1,4 @@
-# !/usr/bin/env/ python3
+#!/usr/bin/env python3
 #
 # Copyright 2023 EduRobotAILab CO., LTD.
 #
@@ -16,12 +16,13 @@
 #
 # Author: Leo Cho
 
+import os
+
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command
-from launch_ros.actions import Node, LifecycleNode
+from launch_ros.actions import Node
 
 ARGUMENTS = [    
     DeclareLaunchArgument('use_sim_time', 
@@ -31,29 +32,15 @@ ARGUMENTS = [
 ]
 
 def generate_launch_description():
-    
     pkg_share_bringup = get_package_share_directory('slampibot_bringup')
     pkg_share_description = get_package_share_directory('slampibot_description')
-    
+
     params_ld08 = PathJoinSubstitution([pkg_share_bringup, 'params', 'spb_ld08.yaml'])  # ld08 lidar parameters
     urdf_xacro = PathJoinSubstitution([pkg_share_description, 'urdf', 'spb_urdf.xacro'])
-    
-    motor_drive_cmd = Node(
-        package='slampibot_bringup',
-        executable='bringup_node',
-        name='bringup_node',
-        output='screen'
-    )
-       
-    ld08_cmd = Node(
-        package='ld08_driver',
-        executable='ld08_node',
-        name='ld08_node',
-        output='screen',
-        emulate_tty=True,
-        parameters=[params_ld08],        
-    )   
 
+    ld = LaunchDescription(ARGUMENTS)
+
+    # robot_state_publisher는 항상 실행
     robot_state_publisher_cmd = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -64,18 +51,42 @@ def generate_launch_description():
             {'robot_description': Command(['xacro', ' ', urdf_xacro])},
         ],
     )
-        
-    camera_pub_cmd = Node(
-        package='slampibot_camera',
-        executable='camera_pub',
-        name='camera_pub',
-        output='screen'
+    ld.add_action(robot_state_publisher_cmd)
+
+    # motor_drive (bringup_node)는 /dev/ttyACM0 있을 경우에만 실행
+    if os.path.exists("/dev/ttyACM0"):
+        motor_drive_cmd = Node(
+            package='slampibot_bringup',
+            executable='bringup_node',
+            name='bringup_node',
+            output='screen'
+        )
+        ld.add_action(motor_drive_cmd)
+    else:
+        print("⚠️  [bringup_node] /dev/ttyACM0 not found. Skipping bringup_node launch.")
+
+    # camera_pub는 /dev/video0 있을 경우에만 실행
+    if os.path.exists("/dev/video0"):
+        camera_pub_cmd = Node(
+            package='slampibot_camera',
+            executable='camera_pub',
+            name='camera_pub',
+            output='screen'
+        )
+        ld.add_action(camera_pub_cmd)
+    else:
+        print("⚠️  [camera_pub] /dev/video0 not found. Skipping camera_pub launch.")
+
+    # ld08 라이다는 항상 실행
+    ld08_cmd = Node(
+        package='ld08_driver',
+        executable='ld08_driver',
+        name='ld08_node',
+        output='screen',
+        emulate_tty=True,
+        parameters=[params_ld08],
     )
-           
-    ld = LaunchDescription(ARGUMENTS)    
-    ld.add_action(robot_state_publisher_cmd)        
-    ld.add_action(motor_drive_cmd)        
-    ld.add_action(camera_pub_cmd)    
-    ld.add_action(ld08_cmd)        
+    ld.add_action(ld08_cmd)
 
     return ld
+
