@@ -35,7 +35,7 @@ def generate_launch_description():
     pkg_share_bringup = get_package_share_directory('slampibot_bringup')
     pkg_share_description = get_package_share_directory('slampibot_description')
     
-    params_ydlidar = PathJoinSubstitution([pkg_share_bringup, 'params', 'spb_ydlidar.yaml'])  # modifiy spb_ydlidar_10.yaml for x4
+    params_ld08 = PathJoinSubstitution([pkg_share_bringup, 'params', 'spb_ld08.yaml'])  # ld08 lidar parameters
     urdf_xacro = PathJoinSubstitution([pkg_share_description, 'urdf', 'spb_urdf.xacro'])
     
     motor_drive_cmd = Node(
@@ -45,13 +45,13 @@ def generate_launch_description():
         output='screen'
     )
        
-    ydlidar_cmd = Node(
-        package='ydlidar',
-        executable='ydlidar_node',
-        name='ydlidar_node',
+    ld08_cmd = Node(
+        package='ld08_driver',
+        executable='ld08_node',
+        name='ld08_node',
         output='screen',
         emulate_tty=True,
-        parameters=[params_ydlidar],        
+        parameters=[params_ld08],        
     )   
 
     robot_state_publisher_cmd = Node(
@@ -76,6 +76,6 @@ def generate_launch_description():
     ld.add_action(robot_state_publisher_cmd)        
     ld.add_action(motor_drive_cmd)        
     ld.add_action(camera_pub_cmd)    
-    ld.add_action(ydlidar_cmd)        
+    ld.add_action(ld08_cmd)        
 
     return ld

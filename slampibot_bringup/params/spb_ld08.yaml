@@ -1,0 +1,14 @@
+ld08_node:
+  ros__parameters:
+    port: /dev/ttyUSB0    
+    frame_id: lidar_link
+    baudrate: 115200    
+    frequency: 10.0
+    angle_max: 180.0
+    angle_min: -180.0    
+    max_range: 12.0    
+    min_range: 0.1
+    auto_reconnect: true
+    inverted: false
+    angle_compensate: true
+    scan_mode: 0 
